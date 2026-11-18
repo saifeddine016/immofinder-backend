@@ -42,14 +42,18 @@ app.post('/api/upload', upload.array('images', 5), (req, res) => {
   res.json({ images: filePaths });
 });
 
-// ===== Routes =====
+// ===== Import des Routes =====
 const authRoutes = require('./routes/authRoutes');
 const propertyRoutes = require('./routes/propertyRoutes');
+const messageRoutes = require('./routes/messageRoutes'); // <-- Import déplacé ici
 
+// ===== Utilisation des Routes =====
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
+app.use('/api/messages', messageRoutes); // <-- Route déplacée ici
 
 // ===== Gestion des erreurs 404 =====
+// ⚠️ Cette partie doit toujours être à la fin, après toutes les routes
 app.use((req, res) => {
   res.status(404).json({ message: 'Route non trouvée' });
 });
